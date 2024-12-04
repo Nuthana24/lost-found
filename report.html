@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Lost or Found Item</title>
+    <!-- Google Fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 15px;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .form-header h2 {
+            font-weight: 700;
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            text-align: left;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: #666;
+            font-size: 14px;
+            display: block;
+        }
+
+        .form-control {
+            border-radius: 25px;
+            padding: 15px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #6a11cb;
+            box-shadow: 0 0 10px rgba(106, 17, 203, 0.3);
+        }
+
+        .btn-custom {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 25px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            transition: background 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background: linear-gradient(to right, #5f10a3, #1e65d4);
+            cursor: pointer;
+        }
+
+        .form-toggle-btns {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .form-toggle-btns button {
+            width: 48%;
+            padding: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 25px;
+            background: #fff;
+            color: #6a11cb;
+            border: 1px solid #6a11cb;
+            transition: background 0.3s ease;
+        }
+
+        .form-toggle-btns .active {
+            background: #6a11cb;
+            color: #fff;
+        }
+
+        .form-toggle-btns button:hover {
+            background: #6a11cb;
+            color: white;
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        @media (max-width: 576px) {
+            .form-container {
+                padding: 20px;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            }
+
+            .title {
+                font-size: 28px;
+            }
+
+            .form-header h2 {
+                font-size: 24px;
+            }
+
+            .form-control {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            .btn-custom {
+                font-size: 16px;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .title {
+                font-size: 24px;
+            }
+
+            .form-container {
+                padding: 15px;
+                border-radius: 10px;
+            }
+
+            .form-header h2 {
+                font-size: 20px;
+            }
+
+            .btn-custom {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="title">Lost and Found</div>
+    
+    <div class="form-container">
+        <div class="form-header">
+            <h2>Report Lost or Found Item</h2>
+        </div>
+
+        <div class="form-toggle-btns">
+            <button id="lostBtn" class="btn-custom active" onclick="toggleForm('lost')">Lost Report</button>
+            <button id="foundBtn" class="btn-custom" onclick="toggleForm('found')">Found Report</button>
+        </div>
+
+        <!-- Lost Form -->
+        <div id="lostForm" class="form-section active">
+            <form method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="lost_image">Product Image</label>
+                    <input type="file" class="form-control" id="lost_image" name="lost_image" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label for="lost_title">Product Title</label>
+                    <input type="text" class="form-control" id="lost_title" name="lost_title" required>
+                </div>
+                <div class="form-group">
+                    <label for="lost_description">Product Description</label>
+                    <textarea class="form-control" id="lost_description" name="lost_description" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="lost_location">Lost Location</label>
+                    <input type="text" class="form-control" id="lost_location" name="lost_location" required>
+                </div>
+                <div class="form-group">
+                    <label for="lost_user_name">Your Name</label>
+                    <input type="text" class="form-control" id="lost_user_name" name="lost_user_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="lost_email">Email</label>
+                    <input type="email" class="form-control" id="lost_email" name="lost_email" required>
+                </div>
+                <button type="submit" class="btn btn-custom">Submit Lost Report</button>
+            </form>
+        </div>
+
+        <!-- Found Form -->
+        <div id="foundForm" class="form-section">
+            <form method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="found_image">Product Image</label>
+                    <input type="file" class="form-control" id="found_image" name="found_image" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label for="found_title">Product Title</label>
+                    <input type="text" class="form-control" id="found_title" name="found_title" required>
+                </div>
+                <div class="form-group">
+                    <label for="found_description">Product Description</label>
+                    <textarea class="form-control" id="found_description" name="found_description" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="found_location">Found Location</label>
+                    <input type="text" class="form-control" id="found_location" name="found_location" required>
+                </div>
+                <div class="form-group">
+                    <label for="found_user_name">Your Name</label>
+                    <input type="text" class="form-control" id="found_user_name" name="found_user_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="found_email">Email</label>
+                    <input type="email" class="form-control" id="found_email" name="found_email" required>
+                </div>
+                <button type="submit" class="btn btn-custom">Submit Found Report</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleForm(formType) {
+            document.getElementById('lostBtn').classList.remove('active');
+            document.getElementById('foundBtn').classList.remove('active');
+            document.getElementById(formType + 'Btn').classList.add('active');
+
+            document.getElementById('lostForm').classList.remove('active');
+            document.getElementById('foundForm').classList.remove('active');
+            document.getElementById(formType + 'Form').classList.add('active');
+        }
+    </script>
+</body>
+</html>
