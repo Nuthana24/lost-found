@@ -1,335 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lost & Found Website</title>
-    <!-- Bootstrap CSS CDN -->
-    <link
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <!-- Glide.js CSS CDN -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.4.1/dist/css/glide.core.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.4.1/dist/css/glide.theme.min.css"
-    />
-    <!-- Font Awesome CDN -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost & Found</title>
+    <link rel="icon" href="/favicon.svg" type="image/x-icon" />
 
-    <style>
-      .navbar {
-        background-color: #343a40;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-      .navbar-brand,
-      .nav-link {
-        color: #ffffff !important;
-      }
-      .nav-link:hover {
-        color: #00d1b2 !important;
-      }
-      .btn-modern {
-        border-radius: 20px;
-        padding: 8px 16px;
-      }
-      .glide__slide img {
-        width: 100%;
-        height: 300px;
-        object-fit: cover;
-      }
-      /* Centered search bar */
-      .search-container {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 80%;
-        max-width: 600px;
-        background-color: rgba(255, 255, 255, 0.9);
-        border-radius: 8px;
-        padding: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      }
-      .search-input {
-        border: none;
-        border-radius: 50px;
-        padding: 10px 20px;
-        outline: none;
-        width: calc(100% - 40px);
-      }
-      .search-btn {
-        background: none;
-        border: none;
-        color: #343a40;
-        font-size: 20px;
-      }
+    <!--==================== STYLE SHEETS ====================-->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"  />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.theme.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.4.1/dist/css/glide.core.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
-      /* Media Queries for Responsiveness */
-      @media (max-width: 768px) {
-        .navbar-nav {
-          text-align: center;
-        }
-        .btn-modern {
-          margin-top: 5px;
-        }
-        .search-container {
-          width: 90%;
-          bottom: 5px;
-        }
-        .glide__slide img {
-          height: 200px;
-        }
-      }
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!--==================== HEADER ====================-->
+    <header class="bg-dark" id="main-header">
+        <div class="container-fluid">
+            <div class="row justify-content-center align-items-center">
+                <!-- Campus Cart Logo -->
+                <a href="index.html" class="col-auto text-start">
+                    <img src="lost-&-found.png" alt="Campus Cart Logo" class="logo-image lost-and-found" />
+                </a>
+    
+                <!-- Spacer for Equal Spacing -->
+                <div class="col"></div>
+    
+                <!-- College Logo -->
+                <div class="col-auto text-end">
+                    <img src="college-logo.png" alt="College Logo" class="logo-image college-logo-1" />
+                </div>
+            </div>
+        </div>
+    </header>
 
-      @media (max-width: 576px) {
-        .navbar-toggler {
-          margin-bottom: 10px;
-        }
-        .search-input {
-          padding: 8px 15px;
-        }
-      }
+    <!--==================== BANNER ====================-->
+    <section class="glide position-relative">
+        <div class="glide__track" data-glide-el="track">
+          <ul class="glide__slides">
+            <li class="glide__slide">
+              <img src="https://via.placeholder.com/1200x400?text=Banner+1" alt="Banner 1" />
+            </li>
+            <li class="glide__slide">
+              <img src="https://via.placeholder.com/1200x400?text=Banner+2" alt="Banner 2" />
+            </li>
+            <li class="glide__slide">
+              <img src="https://via.placeholder.com/1200x400?text=Banner+3" alt="Banner 3" />
+            </li>
+          </ul>
+        </div>
+  
+        <!-- Search Bar -->
+        <div class="search-container text-center">
+          <form class="form-inline d-flex justify-content-between">
+            <input class="search-input" type="text" placeholder="Search lost or found items..."  />
+            <button class="search-btn" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+        </div>
+    </section>
 
-      .fixed-megaphone-btn {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 50%;
-        width: 60px;
-        height: 60px;
-        font-size: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        cursor: pointer;
-        z-index: 1000; /* Ensures it stays above other content */
-        transition: background-color 0.3s ease;
-      }
-
-      .fixed-megaphone-btn:hover {
-        background-color: #0056b3;
-      }
-
-      .fixed-bottom-btn:hover {
-        background-color: #0056b3;
-      }
-
-      .fixed-bottom-btn:hover {
-        background-color: #0056b3;
-      }
-
-      .fixed-bottom-btn:hover {
-        background-color: #0056b3;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <a class="navbar-brand" href="#">Lost & Found</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item"><a class="nav-link" href="#">Lost</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Found</a></li>
-          <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
-        </ul>
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="btn btn-outline-primary btn-modern mr-2" href="login.html"
-              >Login</a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="btn btn-primary btn-modern" href="sign_up.html">Sign Up</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <!-- Glide.js Carousel -->
-    <div class="glide position-relative">
-      <div class="glide__track" data-glide-el="track">
-        <ul class="glide__slides">
-          <li class="glide__slide">
-            <img
-              src="https://via.placeholder.com/1200x400?text=Banner+1"
-              alt="Banner 1"
-            />
-          </li>
-          <li class="glide__slide">
-            <img
-              src="https://via.placeholder.com/1200x400?text=Banner+2"
-              alt="Banner 2"
-            />
-          </li>
-          <li class="glide__slide">
-            <img
-              src="https://via.placeholder.com/1200x400?text=Banner+3"
-              alt="Banner 3"
-            />
-          </li>
-        </ul>
-      </div>
-
-      <!-- Centered Search Bar -->
-      <div class="search-container text-center">
-        <form class="form-inline d-flex justify-content-between">
-          <input
-            class="search-input"
-            type="text"
-            placeholder="Search lost or found items..."
-          />
-          <button class="search-btn" type="submit">
-            <i class="fas fa-search"></i>
-          </button>
-        </form>
-      </div>
+    <!--==================== CARD ====================-->
+    
+    <!-- Filter Buttons -->
+    <div class="container text-center mt-5">
+        <div class="btn-group" role="group" aria-label="Filter Items">
+            <button type="button" class="btn btn-outline-primary filter-btn active" data-filter="all">All</button>
+            <button type="button" class="btn btn-outline-primary filter-btn" data-filter="lost">Lost</button>
+            <button type="button" class="btn btn-outline-primary filter-btn" data-filter="found">Found</button>
+        </div>
     </div>
 
-    <!-- Card Container Section -->
-    <div class="container my-5">
-      <div class="row" id="masonry-container">
-        <!-- Example Card -->
-        <div class="col-md-4 mb-4">
-          <div class="card shadow-sm h-100">
-            <img
-              src="https://via.placeholder.com/400x250"
-              class="card-img-top"
-              alt="Lost Item"
-            />
-            <div class="card-body">
-              <h5 class="card-title">Lost Wallet</h5>
-              <p class="card-text">
-                <span class="badge badge-info">Personal</span>
-                <span class="badge badge-warning">Urgent</span>
-              </p>
 
-              <div class="additional-info" style="display: none">
-                <p class="card-description">
-                  Black leather wallet containing IDs and cards.
-                </p>
-                <p><strong>Location:</strong> Central Park, NY</p>
-                <p><strong>Drop-off Location:</strong> Main Office, NY</p>
-              </div>
-              <button class="btn btn-outline-primary btn-sm ans-btn">
-                ans
-              </button>
+    <!-- Items Section -->
+    <section class="container my-3">
+
+        <div class="row" id="masonry-container">
+            <div class="col-md-4 mb-4" data-type="lost">
+                <div class="card shadow-sm h-100">
+                    <img src="https://via.placeholder.com/400x250" class="card-img-top" alt="Lost Item" />
+
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">Lost Wallet</h5>
+                            <button class="btn btn-outline-primary btn-sm more-btn">More</button>
+                        </div>
+
+                        <p class="card-text">
+                            <span class="badge badge-info">Personal</span>
+                            <span class="badge badge-warning">Urgent</span>
+                        </p>
+    
+                        <div class="additional-info" style="display: none">
+                            <p class="card-description">
+                                Black leather wallet containing IDs and cards.
+                            </p>
+                            <p><strong>Location:</strong> Central Park, NY</p>
+                            <p><strong>Drop-off Location:</strong> Main Office, NY</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
+        
+            <div class="col-md-4 mb-4" data-type="found">
+                <div class="card shadow-sm h-100">
+                    <img src="https://via.placeholder.com/400x250" class="card-img-top" alt="Found Item" />
 
-        <!-- Duplicate this block for ans cards -->
-        <div class="col-md-4 mb-4">
-          <div class="card shadow-sm h-100">
-            <img
-              src="https://via.placeholder.com/400x250"
-              class="card-img-top"
-              alt="Lost Item"
-            />
-            <div class="card-body">
-              <h5 class="card-title">Silver Ring</h5>
-              <p class="card-text">
-                <span class="badge badge-success">Jewelry</span>
-              </p>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">Silver Ring</h5>
+                            <button class="btn btn-outline-primary btn-sm more-btn">More</button>
+                        </div>
 
-              <div class="additional-info" style="display: none">
-                <p class="card-description">
-                  Silver ring with engraved initials.
-                </p>
-                <p><strong>Location:</strong> Downtown LA</p>
-                <p><strong>Drop-off Location:</strong> Lost & Found LA</p>
-              </div>
-              <button class="btn btn-outline-primary btn-sm ans-btn">
-                ans
-              </button>
+                        <p class="card-text">
+                            <span class="badge badge-success">Jewelry</span>
+                        </p>
+                        
+                        <div class="additional-info" style="display: none">
+                            <p class="card-description">
+                                Silver ring with engraved initials.
+                            </p>
+                            <p><strong>Location:</strong> Downtown LA</p>
+                            <p><strong>Drop-off Location:</strong> Lost & Found LA</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
+    </section>
 
-    <!-- Fixed Megaphone Button with Redirect -->
-<a href="repor" class="fixed-megaphone-link" aria-label="Announcement">
-  <button class="fixed-megaphone-btn">
-    <i class="fas fa-bullhorn"></i>
-  </button>
-</a>
+    <!--==================== REPORT BUTTON ====================-->
+    <a href="report.html" class="fixed-megaphone-link" aria-label="Announcement">
+        <button class="fixed-megaphone-btn">
+            <i class="fas fa-bullhorn"></i>
+        </button>
+    </a>
 
-
-    <!-- Bootstrap JS and dependencies -->
+      <!--==================== JAVASCRIPT ====================-->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <!-- Masonry.js and ImagesLoaded CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
     <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
 
-    <!-- Glide.js JS CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.4.1/dist/glide.min.js"></script>
-
-    <script>
-      // Initialize Glide with auto-play
-      new Glide(".glide", {
-        type: "carousel",
-        autoplay: 3000,
-        animationDuration: 800,
-        hoverpause: false,
-        perView: 1,
-      }).mount();
-    </script>
-
-    <!-- Initialize Masonry.js and Toggle Functionality -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var masonryContainer = document.querySelector("#masonry-container");
-        imagesLoaded(masonryContainer, function () {
-          var masonry = new Masonry(masonryContainer, {
-            itemSelector: ".col-md-4",
-            columnWidth: ".col-md-4",
-            percentPosition: true,
-            gutter: 20,
-          });
-
-          // Toggle additional information and re-layout Masonry
-          var ansButtons = document.querySelectorAll(".ans-btn");
-          ansButtons.forEach(function (button) {
-            button.addEventListener("click", function () {
-              var additionalInfo = this.previousElementSibling;
-              additionalInfo.style.display =
-                additionalInfo.style.display === "none" ? "block" : "none";
-              this.textContent =
-                additionalInfo.style.display === "block" ? "Less" : "ans";
-
-              // Adjust Masonry layout after expanding/collapsing
-              masonry.layout();
-            });
-          });
-        });
-      });
-    </script>
-  </body>
+    <script src="script.js"></script>
+    
+</body>
 </html>
