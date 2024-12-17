@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Lost and Found</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Admin Panel - Lost and Found</h1>
+
+    <table id="adminTable">
+        <thead>
+            <tr>
+                <th>Status</th>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>Contact</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Item rows will be dynamically inserted here -->
+        </tbody>
+    </table>
+    
+    
+    <!-- Edit Form -->
+    <div id="editForm" style="display: none;">
+        <h3>Edit Item</h3>
+        <form id="editItemForm">
+            <label for="editItemStatus">Status:</label>
+            <select id="editItemStatus" name="status" required>
+                <option value="lost">Lost</option>
+                <option value="found">Found</option>
+            </select>
+    
+            <label for="editItemImage">Image URL:</label>
+            <input type="text" id="editItemImage" name="image" placeholder="Enter image URL" required>
+    
+            <label for="editItemTitle">Title:</label>
+            <input type="text" id="editItemTitle" name="title" required>
+    
+            <label for="editItemCategory">Category:</label>
+            <input type="text" id="editItemCategory" name="category" required>
+    
+            <label for="editItemDescription">Description:</label>
+            <textarea id="editItemDescription" name="description" required></textarea>
+    
+            <label for="editItemLocation">Location:</label>
+            <input type="text" id="editItemLocation" name="location" required>
+    
+            <label for="editContactInfo">Contact Info:</label>
+            <input type="text" id="editContactInfo" name="contactInfo" required>
+    
+            <button type="submit">Save Changes</button>
+            <button type="button" onclick="cancelEdit()">Cancel</button>
+        </form>
+    </div>    
+
+    <script src="script.js"></script>
+</body>
+</html>
