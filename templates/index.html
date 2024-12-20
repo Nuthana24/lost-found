@@ -1,0 +1,47 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Lost and Found</title>
+</head>
+<body>
+    <h1>Lost and Found Items</h1>
+    
+    <!-- Filter Buttons -->
+    <div class="filter-links">
+        <a href="/?filter=All" class="{% if filter_type == 'All' %}active{% endif %}">All</a>
+        <a href="/?filter=Lost" class="{% if filter_type == 'Lost' %}active{% endif %}">Lost</a>
+        <a href="/?filter=Found" class="{% if filter_type == 'Found' %}active{% endif %}">Found</a>
+    </div>
+    
+    <!-- Report Button -->
+    <a href="{{ url_for('report') }}" class="report-button">Report Item</a>
+    
+    <!-- Cards for Items -->
+    <div class="items-grid">
+        {% for item in items %}
+        <div class="item-card">
+            {% if item.image %}
+            <img src="{{ url_for('static', filename=item.image) }}" alt="Item Image" class="item-image">
+            {% endif %}
+            <h3>{{ item.title }}</h3>
+            <p><strong>Category:</strong> {{ item.category }}</p>
+            <p><strong>Description:</strong> {{ item.description }}</p>
+            <p><strong>Location:</strong> {{ item.location }}</p>
+            <p><strong>Contact:</strong></p>
+            <ul>
+                <li>Email: {{ item.email }}</li>
+                <li>Phone: {{ item.phone }}</li>
+            </ul>
+            <p><strong>Status:</strong> {{ item.status }}</p>
+        </div>
+        {% endfor %}
+        {% if not items %}
+        <p>No items found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
