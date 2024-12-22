@@ -3,144 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Admin Panel</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.svg') }}" type="image/x-icon" />
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 </head>
 <body>
-    <h1>Admin Panel - Lost and Found Items</h1>
+    <!-- Header -->
+    <header class="bg-primary text-white d-flex justify-content-between align-items-center px-3 py-3">
+        <h1 class="display-6 mb-0">Admin Panel</h1>
+        <a href="/logout" class="btn btn-danger">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+    </header>    
 
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                <div class="flash-message">{{ message }}</div>
-            {% endfor %}
+    <div class="container my-5">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-info">
+                    {% for message in messages %}
+                        {{ message }}<br>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Add Item Button -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <button onclick="toggleAddForm()" class="btn btn-success">
+                <i class="fas fa-plus"></i> Add Item
+            </button>
+        </div>
+
+        <!-- Add Item Form -->
+        <div id="add-form" class="card p-3 mb-4" style="display: none;">
+            <form action="/admin" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="add-item" value="true">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="image" class="form-label">Image</label>
+                        <input type="file" id="image" name="image" class="form-control" accept="image/*">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" id="title" name="title" class="form-control" autocomplete="off" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="category" class="form-label">Category</label>
+                        <select id="category" name="category" class="form-select" required>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Clothing">Clothing</option>
+                            <option value="Accessories">Accessories</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="status" class="form-label">Status</label>
+                        <select id="status" name="status" class="form-select" required>
+                            <option value="Lost">Lost</option>
+                            <option value="Found">Found</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea id="description" name="description" class="form-control" rows="3" autocomplete="off" required></textarea>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" id="location" name="location" class="form-control" autocomplete="address-line1" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" autocomplete="email" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="tel" id="phone" name="phone" class="form-control" autocomplete="tel" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Add Item</button>
+            </form>
+        </div>        
+
+        <!-- Items Table -->
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                        <th>Location</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr id="row-{{ item.id }}">
+                        <form action="/admin" method="post" enctype="multipart/form-data" class="edit-form">
+                            <input type="hidden" name="id" value="{{ item.id }}">
+                            <td>{{ item.id }}</td>
+                            <td>
+                                {% if item.image %}
+                                <img src="{{ url_for('static', filename=item.image) }}" alt="Item Image" style="max-width: 50px;">
+                                {% endif %}
+                                <input type="file" name="image" class="form-control" accept="image/*" disabled>
+                            </td>
+                            <td><input type="text" name="title" class="form-control" value="{{ item.title }}" disabled></td>
+                            <td>
+                                <select name="category" class="form-select" disabled>
+                                    <option value="Electronics" {% if item.category == 'Electronics' %}selected{% endif %}>Electronics</option>
+                                    <option value="Clothing" {% if item.category == 'Clothing' %}selected{% endif %}>Clothing</option>
+                                    <option value="Accessories" {% if item.category == 'Accessories' %}selected{% endif %}>Accessories</option>
+                                    <option value="Others" {% if item.category == 'Others' %}selected{% endif %}>Others</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select name="status" class="form-select" disabled>
+                                    <option value="Lost" {% if item.status == 'Lost' %}selected{% endif %}>Lost</option>
+                                    <option value="Found" {% if item.status == 'Found' %}selected{% endif %}>Found</option>
+                                </select>
+                            </td>
+                            <td><textarea name="description" class="form-control" rows="2" disabled>{{ item.description }}</textarea></td>
+                            <td><input type="text" name="location" class="form-control" value="{{ item.location }}" disabled></td>
+                            <td><input type="email" name="email" class="form-control" value="{{ item.email }}" disabled></td>
+                            <td><input type="tel" name="phone" class="form-control" value="{{ item.phone }}" disabled></td>
+                            <td>
+                                <button type="button" class="btn btn-warning btn-sm" onclick="enableEdit('row-{{ item.id }}')">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-sm save-btn" style="display: none;">Save</button>
+                        </form>
+                        <form action="{{ url_for('delete', item_id=item.id) }}" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </form>
+                            </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Similar Items Section -->
+        <h2 class="mt-5">Identical Images</h2>
+        {% if similar_items %}
+        <div class="alert alert-warning">
+            <p>The following items have identical images:</p>
+            <ul>
+                {% for group in similar_items %}
+                <li>
+                    <strong>Item 1:</strong> {{ group[0].title }} (ID: {{ group[0].id }})<br>
+                    <strong>Item 2:</strong> {{ group[1].title }} (ID: {{ group[1].id }})
+                    <!-- Add more items in the group if necessary -->
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <div class="alert alert-success">
+            <p>No identical images found.</p>
+        </div>
         {% endif %}
-    {% endwith %}
-    
-    <a href="/logout" class="logout-button">Logout</a>
-    
-    <!-- Add Item Button -->
-    <button onclick="toggleAddForm()" class="add-button">Add Item</button>
-
-    <!-- Add Item Form -->
-    <div id="add-form" style="display: none;">
-        <form action="/admin" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="add-item" value="true">
-            
-            <label>Image:</label>
-            <input type="file" name="image" accept="image/*">
-
-            <label>Title:</label>
-            <input type="text" name="title" required>
-
-            <label>Category:</label>
-            <select name="category" required>
-                <option value="Electronics">Electronics</option>
-                <option value="Clothing">Clothing</option>
-                <option value="Accessories">Accessories</option>
-                <option value="Others">Others</option>
-            </select>
-
-            <label>Status:</label>
-            <select name="status" required>
-                <option value="Lost">Lost</option>
-                <option value="Found">Found</option>
-            </select>
-
-            <label>Description:</label>
-            <textarea name="description" required></textarea>
-
-            <label>Location:</label>
-            <input type="text" name="location" required>
-
-            <label>Email:</label>
-            <input type="email" name="email" required>
-
-            <label>Phone:</label>
-            <input type="tel" name="phone" required>
-
-            <button type="submit">Add Item</button>
-        </form>
     </div>
 
-    <!-- Items Table -->
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Image</th>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Status</th>
-                <th>Description</th>
-                <th>Location</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in items %}
-            <tr id="row-{{ item.id }}">
-                <form action="/admin" method="post" enctype="multipart/form-data" class="edit-form">
-                    <input type="hidden" name="id" value="{{ item.id }}">
-                    <td>{{ item.id }}</td>
-                    <td>
-                        {% if item.image %}
-                        <img src="{{ url_for('static', filename=item.image) }}" alt="Item Image" style="max-width: 100px;">
-                        {% endif %}
-                        <input type="file" name="image" accept="image/*" disabled>
-                    </td>
-                    <td><input type="text" name="title" value="{{ item.title }}" disabled></td>
-                    <td>
-                        <select name="category" disabled>
-                            <option value="Electronics" {% if item.category == 'Electronics' %}selected{% endif %}>Electronics</option>
-                            <option value="Clothing" {% if item.category == 'Clothing' %}selected{% endif %}>Clothing</option>
-                            <option value="Accessories" {% if item.category == 'Accessories' %}selected{% endif %}>Accessories</option>
-                            <option value="Others" {% if item.category == 'Others' %}selected{% endif %}>Others</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select name="status" disabled>
-                            <option value="Lost" {% if item.status == 'Lost' %}selected{% endif %}>Lost</option>
-                            <option value="Found" {% if item.status == 'Found' %}selected{% endif %}>Found</option>
-                        </select>
-                    </td>
-                    <td><textarea name="description" disabled>{{ item.description }}</textarea></td>
-                    <td><input type="text" name="location" value="{{ item.location }}" disabled></td>
-                    <td><input type="email" name="email" value="{{ item.email }}" disabled></td>
-                    <td><input type="tel" name="phone" value="{{ item.phone }}" disabled></td>
-                    <td class="action-buttons">
-                        <button type="button" onclick="enableEdit('row-{{ item.id }}')">Edit</button>
-                        <button type="submit" class="save-btn" style="display: none;">Save</button>
-                </form>
-                <form action="{{ url_for('delete', item_id=item.id) }}" method="post" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this item?')">
-                    <button type="submit" class="delete-btn">Delete</button>
-                </form>                
-                    </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <!-- Similar Images Section -->
-    <h2 class="mt-5">Identical Images</h2>
-    {% if similar_items %}
-    <div class="alert alert-warning">
-        <p>The following items have identical images:</p>
-        <ul>
-            {% for pair in similar_items %}
-            <li>
-                <strong>Item 1:</strong> {{ pair[0].title }} (ID: {{ pair[0].id }})<br>
-                <strong>Item 2:</strong> {{ pair[1].title }} (ID: {{ pair[1].id }})
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-    {% else %}
-    <p>No identical images found.</p>
-    {% endif %}
-
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function enableEdit(rowId) {
             const row = document.getElementById(rowId);
